@@ -11,4 +11,21 @@
 html {
 	font-size: 16px;
 	font-family: "roboto", sans-serif;
+	--background-color: hsl(180, 7%, 19%);
+	--middleground-color: hsl(193, 27%, 31%);
+	--foreground-color: hsl(182, 26%, 72%);
+	--highlight-color: hsl(164, 45%, 94%);
+	--text-muted: hsl(0, 0%, 90%);
+	--text-sharp: hsl(0, 0%, 95%);
+	--large-shadow: 0px 3px 10px -4px hsl(0, 0%, 0%);
+	--small-shadow: 0px 2px 5px -1px hsl(0, 0%, 0%);
+	--background-img-filter: 
+	brightness(0) 
+	saturate(100%) 
+	invert(14%) 
+	sepia(10%) 
+	saturate(643%) 
+	hue-rotate(131deg) 
+	brightness(98%) 
+	contrast(84%);
 }
