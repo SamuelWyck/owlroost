@@ -1,10 +1,15 @@
 import './App.css';
+import { Outlet } from 'react-router-dom';
 
 
 
 function App() {
 	return (
-		<p>hello world</p>
+		<>
+		<p></p>
+		<Outlet />
+		<p></p>
+		</>
 	);
 };
 
