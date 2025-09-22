@@ -1,0 +1,122 @@
+main.auth-page {
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(var(--middleground-color), .1%, var(--background-color));
+}
+
+.auth-modal {
+    background-color: var(--middleground-color);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--large-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    background-image: linear-gradient(var(--foreground-color) .1%, .2%, var(--middleground-color));
+}
+
+.auth-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.auth-modal form label {
+    display: block;
+    color: var(--text-muted);
+    margin-left: .1rem;
+    margin-bottom: .1rem;
+    font-size: clamp(1rem, .5rem + 2vw, 1.1rem);
+    font-weight:  bold;
+}
+
+.auth-modal form input {
+    width: 100%;
+    border: 2px solid var(--foreground-color);
+    background-color: var(--background-color);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    min-height: 3ch;
+    color: var(--text-muted);
+    outline: none;
+    padding: .3rem;
+}
+
+.auth-modal form input:focus, 
+.auth-modal form input:hover {
+    border-color: var(--highlight-color);
+    background-color: var(--middleground-color);
+}
+
+.auth-modal form > :last-child {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-modal button {
+    cursor: pointer;
+    background-color: var(--foreground-color);
+    background-image: linear-gradient(var(--highlight-color), 10%, var(--foreground-color));
+    box-shadow: var(--small-shadow);
+    color: var(--middleground-color);
+    border: none;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    
+    will-change: color;
+    transition: all .1s linear;
+}
+
+.auth-modal button:hover, .auth-modal button:focus {
+    box-shadow: none;
+    background-image: none;
+    color: var(--background-color);
+}
+
+.auth-modal a {
+    font-size: clamp(1rem, .5rem + 2vw, 1.1rem);
+    color: var(--text-muted);
+    margin-top: 2rem;
+}
+
+.auth-modal a:hover, .auth-modal a:focus {
+    color: var(--foreground-color);
+}
+
+.auth-banner {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.auth-banner p {
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.auth-img-wrapper {
+    max-width: 50px;
+}
+
+.auth-img-wrapper img {
+    width: 100%;
+    filter: var(--background-img-filter)
+}
+
+.auth-modal .errors {
+    margin-bottom: 1rem;
+    list-style: none;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    width: 100%;
+}
