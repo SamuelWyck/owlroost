@@ -15,6 +15,7 @@ main.auth-page {
     flex-direction: column;
     align-items: center;
     margin: 1rem;
+    width: min(303px, 100%);
     background-image: linear-gradient(var(--foreground-color) .1%, .2%, var(--middleground-color));
 }
 
@@ -22,6 +23,7 @@ main.auth-page {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
 }
 
 .auth-modal form label {
@@ -39,10 +41,11 @@ main.auth-page {
     background-color: var(--background-color);
     border-radius: 10px;
     font-size: 1.1rem;
-    min-height: 3ch;
+    min-height: 3.5ch;
     color: var(--text-muted);
     outline: none;
-    padding: .3rem;
+    padding: .4rem;
+    font-family: "roboto", sans-serif;
 }
 
 .auth-modal form input:focus, 
@@ -78,7 +81,7 @@ main.auth-page {
     color: var(--background-color);
 }
 
-.auth-modal a {
+.change-form-link {
     font-size: clamp(1rem, .5rem + 2vw, 1.1rem);
     color: var(--text-muted);
     margin-top: 2rem;
@@ -93,7 +96,6 @@ main.auth-page {
     width: 100%;
     align-items: center;
     justify-content: space-around;
-    margin-bottom: 1rem;
 }
 
 .auth-banner p {
@@ -119,4 +121,11 @@ main.auth-page {
     flex-direction: column;
     gap: .2rem;
     width: 100%;
+}
+
+.home-link {
+    width: 100%;
+    text-decoration: none;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
 }
