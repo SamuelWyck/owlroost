@@ -1,5 +1,6 @@
 import App from "./App.jsx";
 import AuthPage from "./components/authPage.jsx";
+import PostsPage from "./components/postsPage.jsx";
 
 
 
@@ -11,7 +12,7 @@ const routes = [
             {
                 path: "/",
                 index: true,
-                element: <p>hello world</p>
+                element: <PostsPage />
             }
         ]
     },
