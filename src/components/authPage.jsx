@@ -2,13 +2,26 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/authPage.css";
 import logoImg from "../assets/owl.svg";
 import apiManager from "../utils/apiManager.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 
 function AuthPage({signup}) {
     const navigate = useNavigate();
     const [errors, setErrors] = useState(null);
+
+
+    useEffect(function() {
+        apiManager.checkAuthStatus().then(function(res) {
+            if (res.errors) {
+                return;
+            }
+
+            if (res.authenticated) {
+                navigate("/", {replace: true});
+            }
+        });
+    }, []);
 
 
     async function handleSubmit(event) {
