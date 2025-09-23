@@ -56,6 +56,19 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async getPosts() {
+        const url = `${this.#apiDomain}/posts`;
+        const options = {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
