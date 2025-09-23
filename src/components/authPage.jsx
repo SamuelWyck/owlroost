@@ -79,12 +79,14 @@ function AuthPage({signup}) {
     <p></p>
     <main className="auth-page">
         <div className="auth-modal">
-            <div className="auth-banner">
-                <p>OwlRoost</p>
-                <div className="auth-img-wrapper">
-                    <img src={logoImg} alt="" />
+            <Link to="/" className="home-link">
+                <div className="auth-banner">
+                    <p>OwlRoost</p>
+                    <div className="auth-img-wrapper">
+                        <img src={logoImg} alt="" />
+                    </div>
                 </div>
-            </div>
+            </Link>
             {!errors ||
             <ul className="errors">
                 {errors}
@@ -116,6 +118,7 @@ function AuthPage({signup}) {
                 </div>
             </form>
             <Link 
+                className="change-form-link"
                 to={(signup) ? "/login" : "/signup"} 
                 onClick={handleClick}
             >
