@@ -43,6 +43,19 @@ class ApiManager {
         const res = await this.loginOrSignup(reqBody, true);
         return res;
     };
+
+
+    async checkAuthStatus() {
+        const url = `${this.#apiDomain}/auth/status`;
+        const options = {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
