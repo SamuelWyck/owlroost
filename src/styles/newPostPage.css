@@ -1,0 +1,7 @@
+main.new-post-page {
+    background-color: var(--middleground-color);
+    background-image: linear-gradient(var(--foreground-color) -1%, 0%, var(--middleground-color));
+    display: flex;
+    justify-content: center;
+    padding-top: clamp(2rem, 1rem + 7vw, 5rem);
+}
