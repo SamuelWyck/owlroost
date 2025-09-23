@@ -107,7 +107,7 @@ class Header extends Component {
                 <div className="header-menu hidden">
                     {(this.state.user) ?
                     <>
-                    <Link to="/posts/new">Write</Link>
+                    <Link to="/hoots/new">Write</Link>
                     <Link to="/users">Users</Link>
                     </>
                     :
