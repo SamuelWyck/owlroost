@@ -28,4 +28,40 @@ html {
 	hue-rotate(131deg) 
 	brightness(98%) 
 	contrast(84%);
+	--middleground-img-filter:
+	brightness(0) 
+	saturate(100%) 
+	invert(31%) 
+	sepia(27%) 
+	saturate(561%) 
+	hue-rotate(146deg) 
+	brightness(95%) 
+	contrast(89%);
+	--foreground-img-filter: 
+	brightness(0) 
+	saturate(100%) 
+	invert(93%) 
+	sepia(17%) 
+	saturate(382%) 
+	hue-rotate(127deg) 
+	brightness(84%) 
+	contrast(85%);
+	--highlight-img-filter:
+	brightness(0) 
+	saturate(100%) 
+	invert(91%) 
+	sepia(21%) 
+	saturate(78%) 
+	hue-rotate(114deg) 
+	brightness(102%) 
+	contrast(94%);
+	--text-muted-img-filter:
+	brightness(0) 
+	saturate(100%) 
+	invert(99%) 
+	sepia(5%) 
+	saturate(833%) 
+	hue-rotate(207deg) 
+	brightness(114%) 
+	contrast(80%);
 }
