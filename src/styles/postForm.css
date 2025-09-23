@@ -1,0 +1,79 @@
+.post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: min(99%, 600px);
+    margin: 1rem;
+}
+
+.post-form input, .post-form textarea {
+    font-size: clamp(.9rem, .5rem + 2vw, 1rem);
+    border-radius: 10px;
+    padding: .4rem;
+    outline: none;
+    background-color: var(--background-color);
+    border: 2px solid var(--foreground-color);
+    font-family: "roboto";
+    width: 100%;
+    color: var(--text-muted);
+    box-shadow: var(--small-shadow);
+}
+
+.post-form input:hover, .post-form textarea:hover, 
+.post-form input:focus, .post-form textarea:focus {
+    box-shadow: none;
+}
+
+.post-form *::placeholder {
+    color:gray;
+}
+
+.post-form textarea {
+    min-height: 40vw;
+    max-height: 55vh;
+    resize: none;
+    field-sizing: content;
+    word-break: break-word;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+    scrollbar-color: var(--foreground-color) rgb(0, 0, 0, 0);
+}
+
+.post-form > :last-child {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.post-form button {
+    cursor: pointer;
+    background-color: var(--foreground-color);
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-family: "roboto";
+    color: var(--middleground-color);
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    box-shadow: var(--small-shadow);
+    background-image: linear-gradient(var(--highlight-color), 20%, var(--foreground-color));
+
+    will-change: color;
+    transition: all .1s ease-in-out;
+}
+
+.post-form button:hover, .post-form button:focus {
+    box-shadow: none;
+    color: var(--background-color);
+    background-image: none;
+}
+
+.post-form .errors {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    color: var(--text-muted);
+}
