@@ -45,6 +45,19 @@ class ApiManager {
     };
 
 
+    async logoutUser() {
+        const url = `${this.#apiDomain}/auth/logout`;
+        const options = {
+            mode: "cors",
+            method: "POST",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
     async checkAuthStatus() {
         const url = `${this.#apiDomain}/auth/status`;
         const options = {
