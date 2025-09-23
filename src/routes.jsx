@@ -16,7 +16,7 @@ const routes = [
                 element: <PostsPage />
             },
             {
-                path: "/posts/new",
+                path: "/hoots/new",
                 element: <NewPostPage />
             }
         ]
