@@ -94,21 +94,21 @@ function AuthPage({signup}) {
                 {!signup ||
                 <div>
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" name="email"/>
+                    <input type="email" id="email" name="email" required/>
                 </div>
                 }
                 <div>
                     <label htmlFor="username">Username</label>
-                    <input type="text" id="username" name="username" />
+                    <input type="text" id="username" name="username" required/>
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password"/>
+                    <input type="password" id="password" name="password"required/>
                 </div>
                 {!signup ||
                 <div>
                     <label htmlFor="confirm">Confirm password</label>
-                    <input type="password" id="confirm" name="confirm"/>
+                    <input type="password" id="confirm" name="confirm" required/>
                 </div>
                 }
                 <div>
