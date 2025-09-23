@@ -4,6 +4,8 @@ import logoImg from "../assets/owl.svg";
 import { Link } from "react-router-dom";
 import defaultImg from "../assets/account.svg";
 import menuImg from "../assets/menu.svg";
+import { Navigate } from "react-router-dom";
+import apiManager from "../utils/apiManager.js";
 
 
 
@@ -12,10 +14,12 @@ class Header extends Component {
         super(props);
 
         this.state = {
-            user: null
+            user: null,
+            nav: null
         };
 
         this.updateUser = this.updateUser.bind(this);
+        this.logOut = this.logOut.bind(this);
     };
 
 
@@ -31,6 +35,21 @@ class Header extends Component {
 
         this.setState(function(state) {
             return {...state, user};
+        });
+    };
+
+
+    async logOut() {
+        const res = await apiManager.logoutUser();
+        if (res.errors) {
+            return;
+        }
+
+        this.setState(function(state) {
+            return {
+                ...state, 
+                nav: <Navigate to="/login" replace={true} />
+            };
         });
     };
 
@@ -61,6 +80,11 @@ class Header extends Component {
             );
             headerMenu.classList.toggle("hidden");
         };
+
+
+        if (this.state.nav) {
+            return this.state.nav;
+        }
 
 
         return (
@@ -116,7 +140,7 @@ class Header extends Component {
                 </button>
                 <div className="user-menu hidden">
                     <Link to="/user">Profile</Link>
-                    <button>Log out</button>
+                    <button onClick={this.logOut}>Log out</button>
                 </div>
                 </div>
                 </>
