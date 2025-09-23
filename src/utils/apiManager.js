@@ -82,6 +82,23 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async createPost(reqBody) {
+        const url = `${this.#apiDomain}/posts/new`;
+        const options = {
+            mode: "cors",
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: reqBody
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
