@@ -1,0 +1,21 @@
+.loading-img-wrapper {
+    width: 150px;
+}
+
+.loading-img-wrapper img {
+    width: 100%;
+    filter: var(--background-img-filter);
+
+    animation-name: blink;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: backwards;
+}
+
+
+
+@keyframes blink {
+    0% {opacity: .2;}
+    100% {opacity: 1;}
+}
