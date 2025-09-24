@@ -13,6 +13,10 @@ main.posts-page {
 	scrollbar-color: var(--background-color) rgb(0, 0, 0, 0);
 }
 
+main.posts-page .loading-img-wrapper {
+    margin-top: 2rem;
+}
+
 .posts {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 450px));
