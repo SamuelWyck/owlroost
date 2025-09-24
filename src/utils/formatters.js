@@ -4,6 +4,7 @@ import moment from "moment";
 
 function formatDate(date) {
     const formatStr = "M/D/YYYY h:mm a";
+    date = new Date(date).getTime();
     return moment(date).format(formatStr);
 };
 
