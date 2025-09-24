@@ -71,8 +71,9 @@ class ApiManager {
     };
 
 
-    async getPosts() {
-        const url = `${this.#apiDomain}/posts`;
+    async getPosts(pageNum, orderByLikes) {
+        const querys = `?pageNum=${pageNum}&orderByLikes=${orderByLikes}`;
+        const url = `${this.#apiDomain}/posts${querys}`;
         const options = {
             mode: "cors",
             method: "GET",
