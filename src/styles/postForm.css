@@ -29,8 +29,8 @@
 }
 
 .post-form textarea {
-    min-height: 40vw;
-    max-height: 55vh;
+    min-height: clamp(200px, 150px + 5vw, 400px);
+    max-height: 500px;
     resize: none;
     field-sizing: content;
     word-break: break-word;
