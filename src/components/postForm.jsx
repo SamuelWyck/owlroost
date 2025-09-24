@@ -43,7 +43,6 @@ function PostForm(
         reqBody = JSON.stringify(reqBody);
 
         const res = await apiManager.createPost(reqBody);
-        console.log(res)
         if (res.errors) {
             setErrors(getErrorCards(res.errors));
             return;
