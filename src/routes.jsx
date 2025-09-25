@@ -1,6 +1,7 @@
 import App from "./App.jsx";
 import AuthPage from "./components/authPage.jsx";
 import NewPostPage from "./components/newPostPage.jsx";
+import EditPostPage from "./components/editPostPage.jsx";
 import PostsPage from "./components/postsPage.jsx";
 
 
@@ -18,6 +19,10 @@ const routes = [
             {
                 path: "/hoots/new",
                 element: <NewPostPage />
+            },
+            {
+                path: "/hoots/:postId/edit",
+                element: <EditPostPage />
             }
         ]
     },
