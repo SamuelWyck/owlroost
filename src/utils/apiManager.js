@@ -100,6 +100,46 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async getPostForEdit(postId) {
+        const url = `${this.#apiDomain}/posts/${postId}/edit`;
+        const options = {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
+    async editPost(reqBody, postId) {
+        const url = `${this.#apiDomain}/posts/${postId}/edit`;
+        const options = {
+            mode: "cors",
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: reqBody
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
+    async deletePost(postId) {
+        const endPoint = `/${postId}/delete`;
+        const url = `${this.#apiDomain}/posts/${endPoint}`;
+        const options = {
+
+        }
+
+    }
 };
 
 
