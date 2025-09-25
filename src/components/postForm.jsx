@@ -66,10 +66,31 @@ function PostForm(
     };
 
 
+    async function editPost(event) {
+        event.preventDefault();
+
+        const formdata = new FormData(event.target);
+        let reqBody = {};
+        for (let entry of formdata.entries()) {
+            const [key, value] = entry;
+            reqBody[key] = value;
+        }
+        reqBody = JSON.stringify(reqBody);
+
+        const res = await apiManager.editPost(reqBody, postId);
+        if (res.errors) {
+            setErrors(getErrorCards(res.errors));
+            return;
+        }
+
+        navigate("/");
+    };
+
+
     return (
         <form 
             className="post-form"
-            onSubmit={(edit) ? null : createPost}
+            onSubmit={(edit) ? editPost : createPost}
         >   
             {!errors ||
             <ul className="errors">
