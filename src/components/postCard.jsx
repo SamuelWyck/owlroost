@@ -12,7 +12,6 @@ function PostCard({post, userId}) {
 
     function handleEditBtn(event) {
         event.preventDefault();
-        console.log("yes")
         navigate(`/hoots/${post.post_id}/edit`);
     };
 
