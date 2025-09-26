@@ -1,0 +1,118 @@
+main.post-page {
+    background-color: var(--middleground-color);
+    background-image: linear-gradient(var(--foreground-color) -1%, 0%, var(--middleground-color));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(2rem, 1rem + 7vw, 5rem) 1rem 4rem 1rem;
+    overflow: auto;
+    max-height: calc(100vh - 58px);
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+    scrollbar-color: var(--background-color) rgb(0, 0, 0, 0);
+}
+
+.post-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: var(--foreground-color);
+    background-image: linear-gradient(var(--highlight-color) -1%, 10%, var(--foreground-color));
+    border-radius: 10px;
+    box-shadow: var(--large-shadow);
+    padding: 1rem;
+    width: min(700px, 100%);
+}
+
+.post-author-info {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.post-author-img-wrapper {
+    width: 50px;
+    display: flex;
+}
+
+.post-author-img-wrapper img {
+    width: 100%;
+}
+
+.post-author-img-wrapper img.default {
+    filter: var(--background-img-filter)
+}
+
+.post-author-username {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-date {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    font-size: .9rem;
+    opacity: .8;
+}
+
+.post-title {
+    font-size: clamp(1.1rem, .6rem + 3vw, 1.3rem);
+    font-weight: bold;
+    word-break: break-word;
+    line-height: 1.7rem;
+    letter-spacing: .04rem;
+}
+
+.post-content {
+    font-size: clamp(.9rem, .5rem + 2vw, 1.1rem);
+    word-break: break-word;
+    line-height: 1.5rem;
+    letter-spacing: .02rem;
+}
+
+.post-likes-section {
+    display: flex;
+    gap: .4rem;
+    align-items: center;
+}
+
+.post-likes-img {
+    width: clamp(25px, 20px + 2vw, 30px);
+}
+
+
+.post-likes-section button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    padding: .4rem .9rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: var(--foreground-color);
+    letter-spacing: .02rem;
+}
+
+.post-likes-section button:focus, 
+.post-likes-section button:hover {
+    background-color: var(--background-color);
+    color: var(--foreground-color)
+}
+
+.comments-section {
+    margin-top: 3rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.comments-section .comments {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
