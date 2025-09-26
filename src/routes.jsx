@@ -3,6 +3,7 @@ import AuthPage from "./components/authPage.jsx";
 import NewPostPage from "./components/newPostPage.jsx";
 import EditPostPage from "./components/editPostPage.jsx";
 import PostsPage from "./components/postsPage.jsx";
+import PostPage from "./components/postPage.jsx";
 
 
 
@@ -23,6 +24,10 @@ const routes = [
             {
                 path: "/hoots/:postId/edit",
                 element: <EditPostPage />
+            },
+            {
+                path: "/hoots/:postId",
+                element: <PostPage />
             }
         ]
     },
