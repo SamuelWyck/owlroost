@@ -133,13 +133,17 @@ class ApiManager {
 
 
     async deletePost(postId) {
-        const endPoint = `/${postId}/delete`;
+        const endPoint = `${postId}/delete`;
         const url = `${this.#apiDomain}/posts/${endPoint}`;
         const options = {
+            mode: "cors",
+            method: "DELETE",
+            credentials: "include"
+        };
 
-        }
-
-    }
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
