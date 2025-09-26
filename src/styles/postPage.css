@@ -104,15 +104,17 @@ main.post-page {
 
 .comments-section {
     margin-top: 3rem;
-    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    gap: 4rem;
 }
 
 .comments-section .comments {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1.5rem;
+    width: 100%;
 }
