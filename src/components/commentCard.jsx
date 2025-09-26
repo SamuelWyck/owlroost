@@ -6,6 +6,7 @@ import closeImg from "../assets/close.svg";
 import saveImg from "../assets/save.svg";
 import { useState, useRef } from "react";
 import { formatDate } from "../utils/formatters.js";
+import apiManager from "../utils/apiManager.js";
 
 
 
@@ -13,6 +14,12 @@ function CommentCard({comment, userId}) {
     const dateRef = useRef(formatDate(comment.timestamp));
     const [showDel, setShowDel] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [deleted, setDeleted] = useState(false);
+
+
+    if (deleted) {
+        return null;
+    }
 
 
     function toggleDel() {
@@ -22,6 +29,16 @@ function CommentCard({comment, userId}) {
 
     function toggleEdit() {
         setShowEdit(!showEdit);
+    };
+
+
+    async function deleteComment() {
+        const res = await apiManager.deleteComment(comment.id);
+        if (res.errors) {
+            return;
+        }
+
+        setDeleted(true);
     };
 
 
@@ -65,7 +82,7 @@ function CommentCard({comment, userId}) {
             <button key={2} onClick={toggleDel}>
                 <img src={closeImg} alt="cancel" />
             </button>
-            <button key={3}>
+            <button key={3} onClick={deleteComment}>
                 <img src={deleteImg} alt="delete" />
             </button>
             </>
