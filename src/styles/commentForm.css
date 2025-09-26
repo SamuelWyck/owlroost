@@ -1,0 +1,85 @@
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    width: min(600px, 100%);
+    align-items: end;
+    gap: 1rem;
+}
+
+#comment-area {
+    width: 100%;
+    font-family: "roboto";
+    font-size: 1rem;
+    padding: .4rem;
+    border-radius: 10px;
+    background-color: var(--background-color);
+    border: 2px solid var(--foreground-color);
+    box-shadow: var(--small-shadow);
+    resize: none;
+    field-sizing: content;
+    outline: none;
+    min-height: 100px;
+    max-height: 400px;
+    overflow: auto;
+    word-break: break-word;
+    color: var(--text-muted);
+    scrollbar-color: var(--middleground-color) rgb(0, 0, 0, 0);
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+    line-height: 1.3rem;
+}
+
+#comment-area:hover, #comment-area:focus {
+    box-shadow: none;
+}
+
+.comment-form button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    font-family: "roboto", sans-serif;
+    font-weight: bold;
+    color: var(--middleground-color);
+    background-color: var(--foreground-color);
+    background-image: linear-gradient(var(--highlight-color), 10%, var(--foreground-color));
+    box-shadow: var(--small-shadow);
+}
+
+.comment-form button:hover, .comment-form button:focus {
+    color: var(--background-color);
+    box-shadow: none;
+    background-image: none;
+}
+
+.comment-form .errors {
+    list-style: none;
+    color: var(--text-muted);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.comment-form-link {
+    text-decoration: none;
+    outline: none;
+    background-color: var(--foreground-color);
+    color: var(--middleground-color);
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    box-shadow: var(--small-shadow);
+    background-image: linear-gradient(var(--highlight-color), 10%, var(--foreground-color));
+
+    will-change: color;
+    transition: all .1s ease-in-out;
+}
+
+.comment-form-link:hover, .comment-form-link:focus {
+    box-shadow: none;
+    background-image: none;
+    color: var(--background-color);
+}
