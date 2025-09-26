@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import apiManager from "../utils/apiManager.js";
 import {formatNumber, formatDate} from "../utils/formatters.js";
 import LoadingElement from "./loadingElement.jsx";
+import CommentForm from "./commentFrom.jsx";
+import CommentCard from "./commentCard.jsx";
 import defaultImg from "../assets/account.svg";
 import featherImg from "../assets/feather.svg";
 
@@ -40,12 +42,31 @@ function PostPage() {
 
             setLikesInfo(likesInfo);
             setPost(postRes.post);
-            setComments(commentsRes.comments);
+            const userId = (postRes.user) ? 
+            postRes.user.id : null;
+            setComments(
+                getCommentCards(commentsRes.comments, userId)
+            );
             if (postRes.user) {
                 setUser(postRes.user);
             }
         })
     }, [postId, headerRef]);
+
+
+    function getCommentCards(comments, userId) {
+        const cards = [];
+        for (let comment of comments) {
+            cards.push(
+                <CommentCard 
+                    comment={comment}
+                    key={comment.id}
+                    userId={userId}
+                />
+            );
+        }
+        return cards;
+    };
 
 
     async function toggleLike() {
@@ -70,6 +91,19 @@ function PostPage() {
             likesInfo.display = formatNumber(likesInfo.likes);
         }
         setLikesInfo({...likesInfo});
+    };
+
+
+    function newCommentCb(comment) {
+        const userId = (user) ? user.id : null;
+        const card = <CommentCard
+            key={comment.id}
+            comment={comment}
+            userId={userId}
+        />;
+        setComments(function(cards) {
+            return [card, ...cards];
+        });
     };
 
 
@@ -116,6 +150,16 @@ function PostPage() {
                     className="post-likes-img" 
                     alt="feather" 
                 />
+            </div>
+        </section>
+        <section className="comments-section">
+            <CommentForm 
+                user={user} 
+                postId={postId}
+                newCommentCb={newCommentCb}
+            />
+            <div className="comments">
+                {comments}
             </div>
         </section>
     </main>
