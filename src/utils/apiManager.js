@@ -187,6 +187,20 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async deleteComment(commentId) {
+        const endPoint = `${commentId}/delete`;
+        const url = `${this.#apiDomain}/comments/${endPoint}`;
+        const options = {
+            mode: "cors",
+            method: "DELETE",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    }
 };
 
 
