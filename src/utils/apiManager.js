@@ -170,6 +170,23 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async createComment(reqBody) {
+        const url = `${this.#apiDomain}/comments/new`;
+        const options = {
+            mode: "cors",
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: reqBody
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
