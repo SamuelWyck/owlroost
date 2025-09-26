@@ -87,6 +87,17 @@ function PostForm(
     };
 
 
+    async function deletePost() {
+        const res = await apiManager.deletePost(postId);
+        if (res.errors) {
+            setErrors(getErrorCards(res.errors));
+            return;
+        }
+
+        navigate("/", {replace: true});
+    };
+
+
     return (
         <form 
             className="post-form"
@@ -128,7 +139,10 @@ function PostForm(
                     type="button" 
                     onClick={toggleShowDel}
                 >Cancel</button>
-                <button type="button">Delete</button>
+                <button 
+                    type="button"
+                    onClick={deletePost}
+                >Delete</button>
                 </>
                 :
                 <>
