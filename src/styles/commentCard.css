@@ -1,0 +1,74 @@
+.comment-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: var(--foreground-color);
+    background-image: linear-gradient(var(--highlight-color) -1%, 10%, var(--foreground-color));
+    border-radius: 10px;
+    box-shadow: var(--small-shadow);
+    width: min(600px, 100%);
+}
+
+.comment-card-author {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.comment-card-img-wrapper {
+    width: 40px;
+    display: flex;
+}
+
+.comment-card-img-wrapper img {
+    width: 100%;
+}
+
+.comment-card-img-wrapper img.default {
+    filter: var(--background-img-filter);
+}
+
+.comment-card-author-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.comment-card-date {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    font-size: .9rem;
+    opacity: .8;
+}
+
+.comment-card-content {
+    margin: .6rem 0;
+    font-size: clamp(.9rem, .5rem + 2vw, 1rem);
+}
+
+.comment-card-options {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    gap: .5rem;
+}
+
+.comment-card-options button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    width: 25px;
+    display: flex;
+    background: none;
+    --filter: var(--middleground-img-filter);
+}
+
+.comment-card-options button img {
+    filter: var(--filter);
+}
+
+.comment-card-options button:hover, 
+.comment-card-options button:focus {
+    --filter: var(--background-img-filter);
+}
