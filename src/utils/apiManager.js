@@ -102,8 +102,8 @@ class ApiManager {
     };
 
 
-    async getPostForEdit(postId) {
-        const url = `${this.#apiDomain}/posts/${postId}/edit`;
+    async getPost(postId) {
+        const url = `${this.#apiDomain}/posts/${postId}`;
         const options = {
             mode: "cors",
             method: "GET",
@@ -138,6 +138,32 @@ class ApiManager {
         const options = {
             mode: "cors",
             method: "DELETE",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
+    async getPostComments(postId) {
+        const url = `${this.#apiDomain}/comments/${postId}`;
+        const options = {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
+    async togglePostLike(postId) {
+        const url = `${this.#apiDomain}/posts/${postId}/like`;
+        const options = {
+            mode: "cors",
+            method: "POST",
             credentials: "include"
         };
 
