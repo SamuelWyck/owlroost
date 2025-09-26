@@ -27,7 +27,8 @@ function PostsPage() {
             }
             headerRef.current.updateUser(res.user);
             morePosts.current = res.morePosts;
-            setPosts(getPostCards(res.posts, res.user.id));
+            const userId = (res.user) ? res.user.id : null;
+            setPosts(getPostCards(res.posts, userId));
         });
     }, [headerRef]);
 
@@ -54,8 +55,9 @@ function PostsPage() {
         morePosts.current = res.morePosts;
         headerRef.current.updateUser(res.user);
         setPosts(function(posts) {
+            const userId = (res.user) ? res.user.id : null;
             const newPosts = getPostCards(
-                res.posts, res.user.id
+                res.posts, userId
             );
             return [...posts, newPosts];
         });
@@ -81,7 +83,8 @@ function PostsPage() {
         pageNum.current += 1;
         headerRef.current.updateUser(res.user);
         morePosts.current = res.morePosts;
-        setPosts(getPostCards(res.posts, res.user.id));
+        const userId = (res.user) ? res.user.id : null;
+        setPosts(getPostCards(res.posts, userId));
     };
 
 
