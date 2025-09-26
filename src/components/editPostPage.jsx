@@ -14,7 +14,7 @@ function EditPostPage() {
 
 
     useEffect(function() {
-        apiManager.getPostForEdit(postId).then(function(res) {
+        apiManager.getPost(postId).then(function(res) {
             if (res.errors) {
                 return;
             }
