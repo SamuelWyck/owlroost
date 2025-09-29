@@ -15,6 +15,9 @@ function CommentCard({comment, userId}) {
     const [showDel, setShowDel] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [deleted, setDeleted] = useState(false);
+    const [textVal, setTextVal] = useState(comment.content);
+    const [errors, setErrors] = useState(null);
+    const sentEditRef = useRef(false);
 
 
     if (deleted) {
@@ -28,17 +31,74 @@ function CommentCard({comment, userId}) {
 
 
     function toggleEdit() {
+        if (sentEditRef.current) {
+            return;
+        }
+
+        if (showEdit) {
+            setTextVal(comment.content);
+            setErrors(null);
+        }
         setShowEdit(!showEdit);
+    };
+
+
+    function handleChange(event) {
+        setTextVal(event.target.value);
+    };
+
+
+    function getErrorCards(errors) {
+        const cards = [];
+        for (let error of errors) {
+            cards.push(
+                <li className="error" key={error.msg}>
+                    {error.msg}
+                </li>
+            );
+        }
+        return cards;
     };
 
 
     async function deleteComment() {
         const res = await apiManager.deleteComment(comment.id);
         if (res.errors) {
+            setErrors(getErrorCards(res.errors));
             return;
         }
 
         setDeleted(true);
+    };
+
+
+    async function editComment() {
+        if (sentEditRef.current) {
+            return;
+        }
+        if (comment.content === textVal) {
+            toggleEdit();
+            return;
+        }
+
+        sentEditRef.current = true;
+        let reqBody = {
+            content: textVal
+        };
+        reqBody = JSON.stringify(reqBody);
+
+        const res = await apiManager.editComment(
+            comment.id, reqBody
+        );
+        sentEditRef.current = false;
+        if (res.errors) {
+            setErrors(getErrorCards(res.errors));
+            return;
+        }
+
+        comment.content = textVal;
+        setErrors(null);
+        toggleEdit();
     };
 
 
@@ -61,9 +121,25 @@ function CommentCard({comment, userId}) {
         <p className="comment-card-date">
             {dateRef.current}
         </p>
+        {(!errors) ||
+        <ul className="errors">
+            {errors}
+        </ul>
+        }
+        {(showEdit) ?
+        <textarea 
+            name="content" 
+            id="comment-card-edit"
+            value={textVal}
+            onChange={handleChange}
+            required
+            maxLength={6000}
+        ></textarea>
+        :
         <p className="comment-card-content">
             {comment.content}
         </p>
+        }
         {comment.author_id !== userId ||
         <div className="comment-card-options">
             {(!showDel && !showEdit) ?
@@ -91,7 +167,7 @@ function CommentCard({comment, userId}) {
             <button key={4} onClick={toggleEdit}>
                 <img src={closeImg} alt="cancel" />
             </button>
-            <button key={5}>
+            <button key={5} onClick={editComment}>
                 <img src={saveImg} alt="save" />
             </button>
             </>
