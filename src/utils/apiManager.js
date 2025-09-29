@@ -200,7 +200,25 @@ class ApiManager {
 
         const response = await this.#makeApiCall(url, options);
         return response;
-    }
+    };
+
+
+    async editComment(commentId, reqBody) {
+        const endPoint = `${commentId}/edit`;
+        const url = `${this.#apiDomain}/comments/${endPoint}`;
+        const options = {
+            mode: "cors",
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: reqBody
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
