@@ -146,8 +146,9 @@ class ApiManager {
     };
 
 
-    async getPostComments(postId) {
-        const url = `${this.#apiDomain}/comments/${postId}`;
+    async getPostComments(postId, pageNum) {
+        const endPoint = `${postId}?pageNum=${pageNum}`;
+        const url = `${this.#apiDomain}/comments/${endPoint}`;
         const options = {
             mode: "cors",
             method: "GET",
