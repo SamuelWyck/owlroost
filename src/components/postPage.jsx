@@ -14,17 +14,20 @@ import featherImg from "../assets/feather.svg";
 function PostPage() {
     const {postId} = useParams();
     const headerRef = useOutletContext();
+    const sentLike = useRef(false);
+    const pageNum = useRef(1);
+    const moreComments = useRef(false);
+    const fetchingComments = useRef(false);
     const [post, setPost] = useState(null);
     const [likesInfo, setLikesInfo] = useState(null);
     const [comments, setComments] = useState(null);
     const [user, setUser] = useState(null);
-    const sentLike = useRef(false);
 
 
     useEffect(function() {
         Promise.all([
             apiManager.getPost(postId),
-            apiManager.getPostComments(postId)
+            apiManager.getPostComments(postId, 0)
         ]).then(function(res) {
             const [postRes, commentsRes] = res;
             if (postRes.errors || commentsRes.errors) {
@@ -32,6 +35,7 @@ function PostPage() {
             }
 
             headerRef.current.updateUser(postRes.user);
+            moreComments.current = commentsRes.moreComments;
             const likesInfo = {};
             likesInfo.display = formatNumber(postRes.post.likes);
             likesInfo.likes = Number(postRes.post.likes);
@@ -107,6 +111,39 @@ function PostPage() {
     };
 
 
+    async function handleScroll(event) {
+        if (fetchingComments.current || !moreComments.current) {
+            return;
+        }
+        const target = event.target;
+        const scrollPos = target.scrollTop + target.clientHeight;
+        if (scrollPos !== target.scrollHeight) {
+            return;
+        }
+        
+        fetchingComments.current = true;
+        const res = await apiManager.getPostComments(
+            postId, pageNum.current
+        );
+        fetchingComments.current = false;
+        if (res.errors) {
+            return;
+        }
+
+        pageNum.current += 1;
+        moreComments.current = res.moreComments;
+
+        headerRef.current.updateUser(res.user);
+        const userId = (res.user) ? res.user.id : null;
+        setComments(function(cards) {
+            const newCards = getCommentCards(
+                res.comments, userId
+            );
+            return [...cards, newCards];
+        });
+    };
+
+
     if (!post) {
         return (
         <main className="post-page">
@@ -117,7 +154,7 @@ function PostPage() {
 
 
     return (
-    <main className="post-page">
+    <main className="post-page" onScroll={handleScroll}>
         <section className="post-section">
             <div className="post-info">   
                 <div className="post-author-info">
