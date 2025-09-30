@@ -138,10 +138,14 @@ class Header extends Component {
                         }
                     />
                 </button>
+                {!this.state.user ||
                 <div className="user-menu hidden">
-                    <Link to="/user">Profile</Link>
+                    <Link 
+                        to={`/users/${this.state.user.id}`}
+                    >Profile</Link>
                     <button onClick={this.logOut}>Log out</button>
                 </div>
+                }
                 </div>
                 </>
                 :
