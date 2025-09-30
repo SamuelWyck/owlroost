@@ -259,6 +259,34 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async followUser(userId) {
+        const endPoint = `/${userId}/follow`;
+        const url = `${this.#apiDomain}/users${endPoint}`;
+        const options = {
+            mode: "cors",
+            method: "POST",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
+    async unfollowUser(userId) {
+        const endPoint = `/${userId}/unfollow`;
+        const url = `${this.#apiDomain}/users${endPoint}`;
+        const options = {
+            mode: "cors",
+            method: "DELETE",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
