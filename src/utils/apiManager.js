@@ -246,6 +246,19 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async getUsers() {
+        const url = `${this.#apiDomain}/users`;
+        const options = {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
