@@ -4,6 +4,7 @@ import NewPostPage from "./components/newPostPage.jsx";
 import EditPostPage from "./components/editPostPage.jsx";
 import PostsPage from "./components/postsPage.jsx";
 import PostPage from "./components/postPage.jsx";
+import ProfilePage from "./components/profilePage.jsx";
 
 
 
@@ -28,6 +29,10 @@ const routes = [
             {
                 path: "/hoots/:postId",
                 element: <PostPage />
+            },
+            {
+                path: "/users/:userId",
+                element: <ProfilePage />
             }
         ]
     },
