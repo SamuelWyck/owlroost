@@ -9,16 +9,25 @@ import apiManager from "../utils/apiManager.js";
 function ProfilePage() {
     const {userId} = useParams();
     const headerRef = useOutletContext();
+    const [user, setUser] = useState(null);
 
 
     useEffect(function() {
         Promise.all([
-            apiManager.getUserPosts(userId),
-            apiManager.getUserProfile(userId)
+            apiManager.getUserProfile(userId),
+            apiManager.getUserPosts(userId)
         ]).then(function(res) {
-            console.log(res)
-        })
-    }, [userId]);
+            const [profileRes, postsRes] = res;
+            if (profileRes.errors || postsRes.errors) {
+                return;
+            }
+
+            headerRef.current.updateUser(postsRes.user);
+            if (postsRes.user) {
+                setUser(postsRes.user);
+            }
+        });
+    }, [userId, headerRef]);
 
 
     return (
