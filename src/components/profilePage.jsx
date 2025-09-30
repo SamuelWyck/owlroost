@@ -17,6 +17,7 @@ function ProfilePage() {
             apiManager.getUserProfile(userId),
             apiManager.getUserPosts(userId)
         ]).then(function(res) {
+            console.log(res)
             const [profileRes, postsRes] = res;
             if (profileRes.errors || postsRes.errors) {
                 return;
