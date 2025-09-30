@@ -5,6 +5,7 @@ import EditPostPage from "./components/editPostPage.jsx";
 import PostsPage from "./components/postsPage.jsx";
 import PostPage from "./components/postPage.jsx";
 import ProfilePage from "./components/profilePage.jsx";
+import UsersPage from "./components/usersPage.jsx";
 
 
 
@@ -33,6 +34,10 @@ const routes = [
             {
                 path: "/users/:userId",
                 element: <ProfilePage />
+            },
+            {
+                path: "/users",
+                element: <UsersPage />
             }
         ]
     },
