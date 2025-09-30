@@ -114,6 +114,7 @@ class Header extends Component {
                     <>
                     <Link to="/login">Log in</Link>
                     <Link to="/signup">Sign up</Link>
+                    <Link to="/users">Users</Link>
                     </>
                     }
                 </div>
