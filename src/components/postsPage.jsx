@@ -3,7 +3,6 @@ import { useOutletContext } from "react-router-dom";
 import { useEffect, useState, useRef, useContext } from "react";
 import apiManager from "../utils/apiManager.js";
 import PostCard from "./postCard.jsx";
-import {formatDate, formatNumber} from "../utils/formatters.js";
 import LoadingElement from "./loadingElement.jsx";
 import { ErrorContext } from "../utils/context.js";
 
@@ -99,8 +98,6 @@ function PostsPage() {
     function getPostCards(posts, userId) {
         const cards = [];
         for (let post of posts) {
-            post.date = formatDate(post.date);
-            post.displayLikes = formatNumber(post.likes);
             cards.push(
                 <PostCard 
                     post={post} 
