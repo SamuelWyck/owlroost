@@ -14,11 +14,14 @@ function UsersPage() {
     const pageNum = useRef(1);
     const moreUsers = useRef(false);
     const fetchingUsers = useRef(false);
+    const lastSearchVal = useRef("");
 
 
 
     useEffect(function() {
-        apiManager.getUsers(0).then(function(res) {
+        const page = 0;
+        const name = "";
+        apiManager.getUsers(page, name).then(function(res) {
             if (res.errors) {
                 return;
             }
@@ -65,7 +68,7 @@ function UsersPage() {
         
         fetchingUsers.current = true;
         const res = await apiManager.getUsers(
-            pageNum.current
+            pageNum.current, lastSearchVal.current
         );
         fetchingUsers.current = false;
         if (res.errors) {
@@ -79,6 +82,30 @@ function UsersPage() {
             const newCards = getUserCards(res.users, userId);
             return [...cards, newCards];
         });
+    };
+
+
+    async function handleSearch() {
+        if (lastSearchVal.current === searchVal) {
+            return;
+        }
+        if (fetchingUsers.current) {
+            return;
+        }
+
+        lastSearchVal.current = searchVal;
+        fetchingUsers.current = true;
+        const page = 0;
+        const res = await apiManager.getUsers(page, searchVal);
+        fetchingUsers.current = false;
+        if (res.errors) {
+            return;
+        }
+
+        pageNum.current = 1;
+        moreUsers.current = res.moreUsers;
+        const userId = (res.user) ? res.user.id : null;
+        setUsers(getUserCards(res.users, userId));
     };
 
 
@@ -100,7 +127,7 @@ function UsersPage() {
                     value={searchVal}
                     onChange={handleSearchChange} 
                 />
-                <button>Search</button>
+                <button onClick={handleSearch}>Search</button>
         </section>
         <div className="users">
             {users}
