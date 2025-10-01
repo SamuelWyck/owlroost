@@ -17,6 +17,7 @@ function ProfilePage() {
     const [media, setMedia] = useState();
     const [sentReqs, setSentReqs] = useState([]);
     const [incomingReqs, setIncomimgReqs] = useState([]);
+    const [followedUsers, setFollowedUsers] = useState(null);
     const [profileUser, setProfileUser] = useState(null);
     const [reqUserId, setReqUserId] = useState(null);
 
@@ -170,6 +171,12 @@ function ProfilePage() {
                 </div>
             </div>
             }
+            <div className="followed-user">
+                <p>Followed users</p>
+                <div>
+                    {followedUsers}
+                </div>
+            </div>
         </section>
         <section className="media-section">
             <div className="media-options">
