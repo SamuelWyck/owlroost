@@ -10,6 +10,7 @@ main.users-page {
     max-height: calc(100vh - 58px);
     scrollbar-width: thin;
 	scroll-behavior: smooth;
+    scrollbar-gutter: stable;
 	scrollbar-color: var(--background-color) rgb(0, 0, 0, 0);
 }
 
