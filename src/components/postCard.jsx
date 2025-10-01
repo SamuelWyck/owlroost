@@ -3,11 +3,15 @@ import defaultImg from "../assets/account.svg";
 import featherImg from "../assets/feather.svg";
 import editImg from "../assets/pencil.svg";
 import { Link, useNavigate } from "react-router-dom";
+import {formatDate, formatNumber} from "../utils/formatters.js";
+import { useRef } from "react";
 
 
 
 function PostCard({post, userId}) {
     const navigate = useNavigate();
+    const dateRef = useRef(formatDate(post.date));
+    const likesref = useRef(formatNumber(post.likes));
 
 
     function handleEditBtn(event) {
@@ -17,7 +21,7 @@ function PostCard({post, userId}) {
 
 
     return (
-    <Link to={`hoots/${post.post_id}`} className="post-link">
+    <Link to={`/hoots/${post.post_id}`} className="post-link">
     <div className="post-card">
         <div className="post-card-user-info">
             <div className="post-card-user-img-wrapper">
@@ -30,14 +34,14 @@ function PostCard({post, userId}) {
             <p className="post-author">{post.username}</p>
         </div>
         <div className="post-card-date">
-            <p>{post.date}</p>
+            <p>{dateRef.current}</p>
         </div>
         <p className="post-card-title">
             {post.title}
         </p>
         <div className="post-card-meta-info">
         <div className="post-card-likes">
-            <p>{post.displayLikes}</p>
+            <p>{likesref.current}</p>
             <img src={featherImg} alt="feather" />
         </div>
         {(post.author_id !== userId) ||
