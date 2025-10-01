@@ -248,8 +248,9 @@ class ApiManager {
     };
 
 
-    async getUsers() {
-        const url = `${this.#apiDomain}/users`;
+    async getUsers(pageNum, searchName="") {
+        const query = `?pageNum=${pageNum}&name=${searchName}`;
+        const url = `${this.#apiDomain}/users${query}`;
         const options = {
             mode: "cors",
             method: "GET",
