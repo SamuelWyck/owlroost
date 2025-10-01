@@ -4,5 +4,4 @@ footer {
     color: var(--text-muted);
     display: flex;
     justify-content: center;
-    box-shadow: 0px -2px 5px -1px hsl(0, 0%, 0%);
 }
