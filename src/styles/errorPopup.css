@@ -1,0 +1,38 @@
+.error-popup {
+    position: fixed;
+    background-color: rgb(230, 90, 90);
+    padding: .5rem 1rem;
+    bottom: 51px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1;
+    color: var(--background-color);
+}
+
+.error-popup p {
+    flex: 1;
+    word-break: break-word;
+    font-weight: bold;
+}
+
+.error-popup button {
+    width: 30px;
+    display: flex;
+    outline: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    --filter: var(--background-img-filter);
+}
+
+.error-popup button img {
+    filter: var(--filter);
+    width: 100%;
+}
+
+.error-popup button:hover, 
+.error-popup button:focus {
+    --filter: var(--highlight-img-filter)
+}
