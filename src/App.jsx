@@ -1,6 +1,7 @@
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import Header from './components/header.jsx';
+import Footer from './components/footer.jsx';
 import { useRef, useEffect } from 'react';
 
 
@@ -61,7 +62,7 @@ function App() {
 		<>
 		<Header ref={headerRef} />
 		<Outlet context={headerRef} />
-		<p></p>
+		<Footer />
 		</>
 	);
 };
