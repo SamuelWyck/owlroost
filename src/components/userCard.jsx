@@ -20,21 +20,21 @@ function UserCard({user, userId}) {
             return null;
         }
 
-        for (let id of user.followed_users) {
-            if (id === userId) {
-                return true;
-            }
-        }
+        // for (let id of user.followed_users) {
+        //     if (id === userId) {
+        //         return true;
+        //     }
+        // }
         for (let id of user.following_users) {
             if (id === userId) {
                 return true;
             }
         }
-        for (let id of user.sent_requests) {
-            if (id === userId) {
-                return true;
-            }
-        }
+        // for (let id of user.sent_requests) {
+        //     if (id === userId) {
+        //         return true;
+        //     }
+        // }
         for (let id of user.received_requests) {
             if (id === userId) {
                 return true;
