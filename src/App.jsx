@@ -3,11 +3,14 @@ import { Outlet } from 'react-router-dom';
 import Header from './components/header.jsx';
 import Footer from './components/footer.jsx';
 import { useRef, useEffect } from 'react';
+import {ErrorContext} from "./utils/context.js";
+import ErrorPopup from './components/errorPopup.jsx';
 
 
 
 function App() {
 	const headerRef = useRef(null);
+	const errorRef = useRef(null);
 
 
 	useEffect(function() {
@@ -61,7 +64,10 @@ function App() {
 	return (
 		<>
 		<Header ref={headerRef} />
-		<Outlet context={headerRef} />
+		<ErrorPopup ref={errorRef} />
+		<ErrorContext value={errorRef}>
+			<Outlet context={headerRef} />
+		</ErrorContext>
 		<Footer />
 		</>
 	);
