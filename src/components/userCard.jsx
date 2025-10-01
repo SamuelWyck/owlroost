@@ -1,12 +1,14 @@
 import "../styles/userCard.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import defaultImg from "../assets/account.svg";
 import apiManager from "../utils/apiManager.js";
+import {ErrorContext} from "../utils/context.js";
 
 
 
 function UserCard({user, userId}) {
+    const errorRef = useContext(ErrorContext);
     const fetching = useRef(false);
     const [contactMade, setContactMade] = useState(
         checkUserContact()
@@ -52,6 +54,7 @@ function UserCard({user, userId}) {
         const res = await apiManager.followUser(user.id);
         fetching.current = false;
         if (res.errors) {
+            errorRef.current.showError("Server error");
             return;
         }
 
@@ -69,6 +72,7 @@ function UserCard({user, userId}) {
         const res = await apiManager.unfollowUser(user.id);
         fetching.current = false;
         if (res.errors) {
+            errorRef.current.showError("Server error");
             return;
         }
 

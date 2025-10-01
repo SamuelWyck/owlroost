@@ -1,6 +1,6 @@
 import "../styles/postPage.css";
 import { useParams, useOutletContext } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import apiManager from "../utils/apiManager.js";
 import {formatNumber, formatDate} from "../utils/formatters.js";
 import LoadingElement from "./loadingElement.jsx";
@@ -8,11 +8,13 @@ import CommentForm from "./commentFrom.jsx";
 import CommentCard from "./commentCard.jsx";
 import defaultImg from "../assets/account.svg";
 import featherImg from "../assets/feather.svg";
+import { ErrorContext } from "../utils/context.js";
 
 
 
 function PostPage() {
     const {postId} = useParams();
+    const errorRef = useContext(ErrorContext);
     const headerRef = useOutletContext();
     const sentLike = useRef(false);
     const pageNum = useRef(1);
@@ -31,6 +33,10 @@ function PostPage() {
         ]).then(function(res) {
             const [postRes, commentsRes] = res;
             if (postRes.errors || commentsRes.errors) {
+                errorRef.current.showError("Server error");
+                setPost({});
+                setLikesInfo({});
+                setComments([]);
                 return;
             }
 
@@ -55,7 +61,7 @@ function PostPage() {
                 setUser(postRes.user);
             }
         })
-    }, [postId, headerRef]);
+    }, [postId, headerRef, errorRef]);
 
 
     function getCommentCards(comments, userId) {
@@ -82,6 +88,7 @@ function PostPage() {
         const res = await apiManager.togglePostLike(postId);
         sentLike.current = false;
         if (res.errors) {
+            errorRef.current.showError("Server error");
             return;
         }
 
@@ -127,6 +134,7 @@ function PostPage() {
         );
         fetchingComments.current = false;
         if (res.errors) {
+            errorRef.current.showError("Server error");
             return;
         }
 

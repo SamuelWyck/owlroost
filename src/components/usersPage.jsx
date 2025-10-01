@@ -1,13 +1,15 @@
 import "../styles/usersPage.css";
 import apiManager from "../utils/apiManager.js";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { useOutletContext } from "react-router-dom";
 import LoadingElement from "../components/loadingElement.jsx";
 import UserCard from "./userCard.jsx";
+import { ErrorContext } from "../utils/context.js";
 
 
 
 function UsersPage() {
+    const errorRef = useContext(ErrorContext);
     const headerRef = useOutletContext();
     const [searchVal, setSearchVal] = useState("");
     const [users, setUsers] = useState(null);
@@ -23,6 +25,8 @@ function UsersPage() {
         const name = "";
         apiManager.getUsers(page, name).then(function(res) {
             if (res.errors) {
+                errorRef.current.showError("Server error");
+                setUsers([]);
                 return;
             }
 
@@ -31,7 +35,7 @@ function UsersPage() {
             const userId = (res.user) ? res.user.id : null;
             setUsers(getUserCards(res.users, userId));
         });
-    }, [headerRef]);
+    }, [headerRef, errorRef]);
 
 
     function handleSearchChange(event) {
@@ -72,6 +76,7 @@ function UsersPage() {
         );
         fetchingUsers.current = false;
         if (res.errors) {
+            errorRef.current.showError("Server error");
             return;
         }
 
@@ -99,6 +104,7 @@ function UsersPage() {
         const res = await apiManager.getUsers(page, searchVal);
         fetchingUsers.current = false;
         if (res.errors) {
+            errorRef.current.showError("Server error");
             return;
         }
 

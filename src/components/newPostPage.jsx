@@ -1,19 +1,22 @@
 import "../styles/newPostPage.css";
 import apiManager from "../utils/apiManager.js";
 import { useOutletContext, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import PostForm from "./postForm.jsx";
+import { ErrorContext } from "../utils/context.js";
 
 
 
 function NewPostPage() {
     const navigate = useNavigate();
+    const errorRef = useContext(ErrorContext);
     const headerRef = useOutletContext();
 
 
     useEffect(function() {
         apiManager.checkAuthStatus().then(function(res) {
             if (res.errors) {
+                errorRef.current.showError("Server error");
                 return;
             }
             if (!res.authenticated) {
@@ -22,7 +25,7 @@ function NewPostPage() {
 
             headerRef.current.updateUser(res.user);
         });
-    }, [])
+    }, [headerRef, errorRef])
 
 
     return (

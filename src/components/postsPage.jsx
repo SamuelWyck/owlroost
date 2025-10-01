@@ -1,14 +1,16 @@
 import "../styles/postsPage.css";
 import { useOutletContext } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import apiManager from "../utils/apiManager.js";
 import PostCard from "./postCard.jsx";
 import {formatDate, formatNumber} from "../utils/formatters.js";
 import LoadingElement from "./loadingElement.jsx";
+import { ErrorContext } from "../utils/context.js";
 
 
 
 function PostsPage() {
+    const errorRef = useContext(ErrorContext);
     const headerRef = useOutletContext();
     const [posts, setPosts] = useState(null);
     const orderByLikes = useRef(false);
@@ -23,6 +25,8 @@ function PostsPage() {
         apiManager.getPosts(pageNum, orderByLikes)
         .then(function(res) {
             if (res.errors) {
+                errorRef.current.showError("Server error");
+                setPosts([]);
                 return;
             }
             headerRef.current.updateUser(res.user);
@@ -30,7 +34,7 @@ function PostsPage() {
             const userId = (res.user) ? res.user.id : null;
             setPosts(getPostCards(res.posts, userId));
         });
-    }, [headerRef]);
+    }, [headerRef, errorRef]);
 
 
     async function handleScroll(event) {
@@ -48,6 +52,7 @@ function PostsPage() {
         );
         fetchingPosts.current = false;
         if (res.errors) {
+            errorRef.current.showError("Server error");
             return;
         }
 
@@ -77,6 +82,8 @@ function PostsPage() {
             pageNum.current, orderByLikes.current
         );
         if (res.errors) {
+            errorRef.current.showError("Server error");
+            setPosts([]);
             return;
         }
 
