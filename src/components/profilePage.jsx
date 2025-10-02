@@ -1,18 +1,21 @@
 import "../styles/profilePage.css";
 import defaultImg from "../assets/account.svg";
 import { useParams, useOutletContext } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import apiManager from "../utils/apiManager.js";
 import PostCard from "./postCard.jsx";
 import CommentCard from "./commentCard.jsx";
 import LoadingElement from "./loadingElement.jsx";
 import RequestCard from "./requestCard.jsx";
+import {ErrorContext} from "../utils/context.js";
 
 
 
 function ProfilePage() {
     const {userId} = useParams();
     const headerRef = useOutletContext();
+    const errorRef = useContext(ErrorContext);
+    const fetching = useRef(false);
     const arePosts = useRef(true);
     const [media, setMedia] = useState();
     const [sentReqs, setSentReqs] = useState([]);
@@ -20,6 +23,9 @@ function ProfilePage() {
     const [followedUsers, setFollowedUsers] = useState(null);
     const [profileUser, setProfileUser] = useState(null);
     const [reqUserId, setReqUserId] = useState(null);
+    const [clientFollowing, setClientFollowing] = useState(null);
+    const [showImgDel, setShowImgDel] = useState(false);
+    const [infoVal, setInfoVal] = useState("");
 
 
     useEffect(function() {
@@ -30,6 +36,7 @@ function ProfilePage() {
             console.log(res)
             const [profileRes, postsRes] = res;
             if (profileRes.errors || postsRes.errors) {
+                errorRef.current.showError("Server error");
                 return;
             }
 
@@ -41,6 +48,10 @@ function ProfilePage() {
 
             setMedia(getMediaCards(postsRes.posts, reqUserId));
             setProfileUser(profileRes.profile.user);
+            setClientFollowing(profileRes.followingUser);
+            if (profileRes.profile.user.info) {
+                setInfoVal(profileRes.profile.user.info);
+            }
 
             const [sent, received] = getReqCards(
                 profileRes.profile.follow_requests, reqUserId
@@ -73,6 +84,10 @@ function ProfilePage() {
 
 
     function getReqCards(followReqs, userId) {
+        if (!followReqs) {
+            return [[], []];
+        }
+
         const sent = [];
         const received = [];
         for (let req of followReqs) {
@@ -101,6 +116,60 @@ function ProfilePage() {
     };
 
 
+    async function toggleFollow() {
+        if (fetching.current) {
+            return;
+        }
+
+        fetching.current = true;
+        let res = null;
+        if (clientFollowing) {
+            res = await apiManager.unfollowUser(userId);
+        } else {
+            res = await apiManager.followUser(userId);
+        }
+        fetching.current = false;
+        if (res.errors) {
+            errorRef.current.showError("Server error");
+            return;
+        }
+
+        setClientFollowing(!clientFollowing);
+    };
+
+
+    async function updateInfo() {
+        if (profileUser.info === infoVal) {
+            return;
+        }
+
+        let reqBody = {
+            info: infoVal
+        };
+        reqBody = JSON.stringify(reqBody);
+
+        const res = await apiManager.updateUserInfo(reqBody);
+        if (res.errors) {
+            errorRef.current.showError(
+                res.errors[0].msg
+            );
+            return;
+        }
+
+        profileUser.info = infoVal;
+    };
+
+
+    function toggleImgDel() {
+        setShowImgDel(!showImgDel);
+    };
+
+
+    function handleInfoChange(event) {
+        setInfoVal(event.target.value);
+    };
+
+
     if (!profileUser) {
         return (
             <main className="profile-page">
@@ -113,15 +182,54 @@ function ProfilePage() {
     return (
     <main className="profile-page">
         <section className="profile-section">
-            <p>{profileUser.username}</p>
+            <div className="follow-user-wrapper">
+                <p>{profileUser.username}</p>
+                {(!reqUserId || reqUserId === userId)  ||
+                <>
+                {(clientFollowing) ?
+                <button
+                    key={0}
+                    onClick={toggleFollow}
+                >Unfollow</button>
+                :
+                <button
+                    key={1}
+                    onClick={toggleFollow}
+                >Follow</button>
+                }
+                </>
+                }
+            </div>
             <div className="profile-details">
                 <div className="profile-img-info">
                     <div className="profile-img-wrapper">
-                        <img src={defaultImg} alt="" />
+                        {(profileUser.profile_img_url) ?
+                        <img src={profileUser.profile_img_url}/>
+                        :
+                        <img 
+                            src={defaultImg} 
+                            className="default" 
+                        />
+                        }
                     </div>
                     {(reqUserId !== profileUser.id) ||
                     <div className="img-options">
-                        <button>Delete image</button>
+                        {(showImgDel) ?
+                        <>
+                        <button
+                            key={0}
+                            onClick={toggleImgDel}
+                        >Cancel</button>
+                        <button
+                            key={1}
+                        >Delete</button>
+                        </>
+                        :
+                        <>
+                        <button
+                            key={2}
+                            onClick={toggleImgDel}
+                        >Delete image</button>
                         <form>
                             <label htmlFor="image">
                                 Upload image
@@ -132,25 +240,30 @@ function ProfilePage() {
                                 id="image"
                             />
                         </form>
+                        </>
+                        }
                     </div>
                     }
                 </div>
-                {(reqUserId === profileUser.id) ?
-                    <div className="profile-info-edit">
-                        <textarea 
-                            name="info" 
-                            id="profile-info"
-                            value={
-                                (profileUser.info) ?
-                                profileUser.info : ""
-                            }
-                        ></textarea>
-                        <button>Save</button>
-                    </div>
-                    :
-                    <p className="profile-info">
-                        {profileUser.info}
-                    </p>
+                {(reqUserId === userId) ?
+                <div className="profile-info-edit">
+                    <textarea 
+                        name="info" 
+                        id="profile-info"
+                        value={infoVal}
+                        onChange={handleInfoChange}
+                        maxLength={3000}
+                    ></textarea>
+                    <button onClick={updateInfo}>Save</button>
+                </div>
+                :
+                <>
+                {(infoVal.length <= 0) || 
+                <p className="profile-info">
+                    {infoVal}
+                </p>
+                }
+                </>
                 }
             </div>
         </section>
