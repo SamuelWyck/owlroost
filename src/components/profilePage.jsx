@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import apiManager from "../utils/apiManager.js";
 import PostCard from "./postCard.jsx";
 import CommentCard from "./commentCard.jsx";
+import UserCard from "./userCard.jsx";
 import LoadingElement from "./loadingElement.jsx";
 import RequestCard from "./requestCard.jsx";
 import {ErrorContext} from "../utils/context.js";
@@ -22,7 +23,7 @@ function ProfilePage() {
     const [incomingReqs, setIncomimgReqs] = useState([]);
     const [followedUsers, setFollowedUsers] = useState(null);
     const [profileUser, setProfileUser] = useState(null);
-    const [reqUserId, setReqUserId] = useState(null);
+    const [clientUserId, setClientUserId] = useState(null);
     const [clientFollowing, setClientFollowing] = useState(null);
     const [showImgDel, setShowImgDel] = useState(false);
     const [infoVal, setInfoVal] = useState("");
@@ -42,24 +43,33 @@ function ProfilePage() {
 
             headerRef.current.updateUser(postsRes.user);
 
-            const reqUserId = (postsRes.user) ? 
+            const clientUserId = (postsRes.user) ? 
             postsRes.user.id : null;
-            setReqUserId(reqUserId);
+            setClientUserId(clientUserId);
 
-            setMedia(getMediaCards(postsRes.posts, reqUserId));
+            setMedia(getMediaCards(
+                postsRes.posts, clientUserId
+            ));
             setProfileUser(profileRes.profile.user);
             setClientFollowing(profileRes.followingUser);
-            if (profileRes.profile.user.info) {
+            if (!profileRes.profile.user.info) {
+                setInfoVal("");
+            } else {
                 setInfoVal(profileRes.profile.user.info);
             }
 
             const [sent, received] = getReqCards(
-                profileRes.profile.follow_requests, reqUserId
+                profileRes.profile.follow_requests, 
+                clientUserId
             );
             setIncomimgReqs(received);
             setSentReqs(sent);
+            setFollowedUsers(getUserCards(
+                profileRes.profile.user.followed,
+                clientUserId
+            ));
         });
-    }, [userId, headerRef]);
+    }, [userId, headerRef, errorRef]);
 
 
     function getMediaCards(media, userId) {
@@ -100,6 +110,7 @@ function ProfilePage() {
                         request={req}
                         key={req.request_id}
                         sent={true}
+                        delCb={requestDelCb}
                     />
                 );
             } else {
@@ -108,11 +119,30 @@ function ProfilePage() {
                         key={req.request_id}
                         sent={false}
                         request={req}
+                        delCb={requestDelCb}
                     />
                 );
             }
         }
         return [sent, received];
+    };
+
+
+    function getUserCards(users, userId) {
+        const cards = [];
+        for (let user of users) {
+            if (!user.id) {
+                continue;
+            }
+            cards.push(
+                <UserCard
+                    user={user}
+                    key={user.id}
+                    userId={userId}
+                />
+            );
+        }
+        return cards;
     };
 
 
@@ -170,6 +200,20 @@ function ProfilePage() {
     };
 
 
+    function requestDelCb(reqId, sent) {
+        const setState = (sent) ? setSentReqs : setIncomimgReqs;
+        setState(function(reqs) {
+            const savedReqs = [];
+            for (let req of reqs) {
+                if (req.props.request.request_id !== reqId) {
+                    savedReqs.push(req);
+                }
+            }
+            return savedReqs;
+        });
+    };
+
+
     if (!profileUser) {
         return (
             <main className="profile-page">
@@ -184,7 +228,7 @@ function ProfilePage() {
         <section className="profile-section">
             <div className="follow-user-wrapper">
                 <p>{profileUser.username}</p>
-                {(!reqUserId || reqUserId === userId)  ||
+                {(!clientUserId || clientUserId === userId)  ||
                 <>
                 {(clientFollowing) ?
                 <button
@@ -212,7 +256,7 @@ function ProfilePage() {
                         />
                         }
                     </div>
-                    {(reqUserId !== profileUser.id) ||
+                    {(clientUserId !== profileUser.id) ||
                     <div className="img-options">
                         {(showImgDel) ?
                         <>
@@ -245,7 +289,7 @@ function ProfilePage() {
                     </div>
                     }
                 </div>
-                {(reqUserId === userId) ?
+                {(clientUserId === userId) ?
                 <div className="profile-info-edit">
                     <textarea 
                         name="info" 
@@ -270,7 +314,7 @@ function ProfilePage() {
         <section className="following-section">
             {(sentReqs.length <= 0) ||
             <div className="sent-reqs">
-                <p>Sent follow requests</p>
+                <p>Sent Follow Requests</p>
                 <div>
                     {sentReqs}
                 </div>
@@ -278,14 +322,14 @@ function ProfilePage() {
             }
             {(incomingReqs.length <= 0) ||
             <div className="incoming-reqs">
-                <p>Follow requests</p>
+                <p>Follow Requests</p>
                 <div>
                     {incomingReqs}
                 </div>
             </div>
             }
             <div className="followed-user">
-                <p>Followed users</p>
+                <p>Followed Users</p>
                 <div>
                     {followedUsers}
                 </div>
