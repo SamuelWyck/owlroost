@@ -4,7 +4,7 @@ main.profile-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rem;
+    gap: 6rem;
     padding: 4rem 1rem;
     overflow: auto;
     max-height: calc(100vh - 58px);
@@ -153,4 +153,34 @@ main.profile-page {
     overflow: auto;
     scrollbar-width: thin;
     scroll-behavior: smooth;
+}
+
+.following-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.following-section > div > p {
+    font-size: clamp(1.1rem, .7rem + 2vw, 1.3rem);
+    font-weight: bold;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    letter-spacing: .03rem;
+}
+
+.following-section > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.following-section > div > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
