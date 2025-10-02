@@ -5,11 +5,152 @@ main.profile-page {
     flex-direction: column;
     align-items: center;
     gap: 4rem;
-    padding: 4rem 0;
+    padding: 4rem 1rem;
     overflow: auto;
-    max-height: calc(100vh - 58px - 51px);
+    max-height: calc(100vh - 58px);
     scrollbar-width: thin;
 	scroll-behavior: smooth;
     scrollbar-gutter: stable;
 	scrollbar-color: var(--background-color) rgb(0, 0, 0, 0);
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+}
+
+.follow-user-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: min(600px, 100%);
+}
+
+.follow-user-wrapper p {
+    color: var(--highlight-color);
+    font-size: clamp(1.3rem, 1rem + 2vw, 2rem);
+    flex: 1;
+    word-break: break-word;
+}
+
+.follow-user-wrapper button,
+.img-options button, 
+.img-options label,
+.profile-info-edit button {
+    cursor: pointer;
+    background-color: var(--foreground-color);
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-family: "roboto";
+    color: var(--middleground-color);
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    box-shadow: var(--small-shadow);
+    background-image: linear-gradient(var(--highlight-color), 20%, var(--foreground-color));
+
+    will-change: color;
+    transition: all .1s ease-in-out;
+}
+
+.follow-user-wrapper button:hover, 
+.follow-user-wrapper button:focus,
+.img-options button:hover, 
+.img-options button:focus,
+.img-options label:hover, 
+.img-options label:focus,
+.profile-info-edit button:hover, 
+.profile-info-edit button:focus {
+    box-shadow: none;
+    color: var(--background-color);
+    background-image: none;
+}
+
+.profile-details {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-img-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+}
+
+.profile-img-wrapper {
+    width: 250px;
+    display: flex;
+    background-color: var(--foreground-color);
+    border-radius: 50%;
+    box-shadow: var(--small-shadow);
+}
+
+.profile-img-wrapper img {
+    width: 100%;
+}
+
+.profile-img-wrapper img.default {
+    filter: var(--background-img-filter);
+}
+
+.img-options {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.img-options form input[type="file"] {
+    display: none;
+}
+
+.profile-info-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#profile-info {
+    outline: none;
+    font-size: clamp(.9rem, .5rem + 2vw, 1rem);
+    font-family: "roboto", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-muted);
+    field-sizing: content;
+    min-width: 300px;
+    width: min(400px, 100%);
+    max-width: 400px;
+    min-height: 70px;
+    max-height: 350px;
+    word-break: break-word;
+    resize: none;
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--middleground-color) rgb(0, 0, 0, 0);
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    padding: .5rem;
+    line-height: 1.4rem;
+    border-radius: 10px;
+    border: 2px solid var(--foreground-color);
+}
+
+.profile-info {
+    font-size: clamp(.9rem, .5rem + 2vw, 1rem);
+    color: var(--text-muted);
+    line-height: 1.4rem;
+    word-break: break-word;
+    width: min(400px, 100%);
+    max-height: 500px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
 }
