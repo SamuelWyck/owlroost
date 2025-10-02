@@ -288,6 +288,23 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async updateUserInfo(reqBody) {
+        const url = `${this.#apiDomain}/users/update-info`;
+        const options = {
+            mode: "cors",
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: reqBody
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
