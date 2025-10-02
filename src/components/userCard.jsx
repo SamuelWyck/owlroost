@@ -19,6 +19,9 @@ function UserCard({user, userId}) {
         if (!userId) {
             return null;
         }
+        if (!user.following_users) {
+            return null;
+        }
 
         // for (let id of user.followed_users) {
         //     if (id === userId) {
