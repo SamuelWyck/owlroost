@@ -1,6 +1,7 @@
 .user-card-link {
     text-decoration: none;
     color: var(--background-color);
+    width: min(450px, 100%);
 }
 
 .user-card {
