@@ -1,0 +1,61 @@
+.request-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: min(450px, 100%);
+    background-color: var(--foreground-color);
+    background-image: linear-gradient(var(--highlight-color) -1%, 10%, var(--foreground-color));
+    padding: 1rem;
+    box-shadow: var(--large-shadow);
+    color: var(--background-color);
+    border-radius: 10px;
+
+    will-change: color;
+    transition: all .1s ease-in-out;
+}
+
+.request-user-img-wrapper {
+    width: 40px;
+    display: flex;
+}
+
+.request-user-img-wrapper img.default {
+    filter: var(--background-img-filter);
+}
+
+.request-user {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    width: calc(100% - 68px);
+}
+
+.request-user p {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.request-options {
+    display: flex;
+    gap: .5rem;
+}
+
+.request-options button {
+    width: 30px;
+    display: flex;
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    --filter: var(--middleground-img-filter);
+}
+
+.request-options button:hover, 
+.request-options button:focus {
+    --filter: var(--highlight-img-filter);
+}
+
+.request-options button img {
+    filter: var(--filter)
+}
