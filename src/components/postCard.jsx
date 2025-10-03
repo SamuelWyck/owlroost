@@ -20,10 +20,20 @@ function PostCard({post, userId}) {
     };
 
 
+    function goToUserProfile(event) {
+        event.preventDefault();
+        navigate(`/users/${post.author_id}`);
+    };
+
+
     return (
     <Link to={`/hoots/${post.post_id}`} className="post-link">
     <div className="post-card">
-        <div className="post-card-user-info">
+        <div 
+            className="post-card-user-info" 
+            tabIndex={0}
+            onClick={goToUserProfile}
+        >
             <div className="post-card-user-img-wrapper">
                 {(post.profile_img_url) ?
                 <img src={post.profile_img_url}/>

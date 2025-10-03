@@ -24,6 +24,14 @@
     display: flex;
     gap: .5rem;
     align-items: center;
+    --filter: var(--background-img-filter);
+}
+
+.post-card-user-info:hover, 
+.post-card-user-info:focus {
+    --filter: var(--middleground-img-filter);
+    color: var(--middleground-color);
+    text-decoration: underline;
 }
 
 .post-card-user-info p {
@@ -39,7 +47,7 @@
 
 .post-card-user-img-wrapper img {
     width: 100%;
-    filter: var(--background-img-filter);
+    filter: var(--filter);
 }
 
 .post-card-likes {
