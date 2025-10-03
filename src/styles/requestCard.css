@@ -20,7 +20,7 @@
 }
 
 .request-user-img-wrapper img.default {
-    filter: var(--background-img-filter);
+    filter: var(--filter);
 }
 
 .request-user {
@@ -30,10 +30,13 @@
     width: calc(100% - 68px);
     text-decoration: none;
     color: var(--background-color);
+    --filter: var(--background-img-filter)
 }
 
 .request-user:hover, .request-user:focus {
     text-decoration: underline;
+    --filter: var(--middleground-img-filter);
+    color: var(--middleground-color);
 }
 
 .request-user p {
