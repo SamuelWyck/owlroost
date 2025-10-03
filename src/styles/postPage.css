@@ -30,6 +30,15 @@ main.post-page {
     gap: .5rem;
     align-items: center;
     margin-bottom: .5rem;
+    --filter: var(--background-img-filter);
+    text-decoration: none;
+    color: var(--background-color);
+}
+
+.post-author-info:hover, .post-author-info:focus {
+    --filter: var(--middleground-img-filter);
+    color: var(--middleground-color);
+    text-decoration: underline;
 }
 
 .post-author-img-wrapper {
@@ -42,7 +51,7 @@ main.post-page {
 }
 
 .post-author-img-wrapper img.default {
-    filter: var(--background-img-filter)
+    filter: var(--filter)
 }
 
 .post-author-username {

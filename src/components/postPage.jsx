@@ -1,5 +1,5 @@
 import "../styles/postPage.css";
-import { useParams, useOutletContext } from "react-router-dom";
+import { useParams, useOutletContext, Link } from "react-router-dom";
 import { useEffect, useState, useRef, useContext } from "react";
 import apiManager from "../utils/apiManager.js";
 import {formatNumber, formatDate} from "../utils/formatters.js";
@@ -165,7 +165,10 @@ function PostPage() {
     <main className="post-page" onScroll={handleScroll}>
         <section className="post-section">
             <div className="post-info">   
-                <div className="post-author-info">
+                <Link 
+                    className="post-author-info"
+                    to={`/users/${post.author_id}`}
+                >
                     <div className="post-author-img-wrapper">
                     {(post.profile_img_url) ?
                     <img src={post.profile_img_url}/>
@@ -176,7 +179,7 @@ function PostPage() {
                     <p className="post-author-username">
                         {post.username}
                     </p>
-                </div>
+                </Link>
                 <p className="post-date">{post.date}</p>
             </div>
             <p className="post-title">{post.title}</p>
