@@ -13,6 +13,16 @@
     display: flex;
     align-items: center;
     gap: .5rem;
+    color: var(--background-color);
+    text-decoration: none;
+    --filter: var(--background-img-filter);
+}
+
+.comment-card-author:hover, 
+.comment-card-author:focus {
+    --filter: var(--middleground-img-filter);
+    color: var(--middleground-color);
+    text-decoration: underline;
 }
 
 .comment-card-img-wrapper {
@@ -25,7 +35,7 @@
 }
 
 .comment-card-img-wrapper img.default {
-    filter: var(--background-img-filter);
+    filter: var(--filter);
 }
 
 .comment-card-author-name {
@@ -70,7 +80,7 @@
 
 .comment-card-options button:hover, 
 .comment-card-options button:focus {
-    --filter: var(--background-img-filter);
+    --filter: var(--highlight-img-filter);
 }
 
 #comment-card-edit {

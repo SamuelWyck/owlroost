@@ -7,6 +7,7 @@ import saveImg from "../assets/save.svg";
 import { useState, useRef } from "react";
 import { formatDate } from "../utils/formatters.js";
 import apiManager from "../utils/apiManager.js";
+import { Link } from "react-router-dom";
 
 
 
@@ -105,7 +106,10 @@ function CommentCard({comment, userId}) {
     return (
     <div className="comment-card">
         <div className="comment-card-info">
-            <div className="comment-card-author">
+            <Link 
+                className="comment-card-author"
+                to={`/users/${comment.author_id}`}
+            >
                 <div className="comment-card-img-wrapper">
                     {(comment.profile_img_url) ?
                     <img src={comment.profile_img_url}/>
@@ -116,7 +120,7 @@ function CommentCard({comment, userId}) {
                 <p className="comment-card-author-name">
                     {comment.username}
                 </p>
-            </div>
+            </Link>
         </div>
         <p className="comment-card-date">
             {dateRef.current}
