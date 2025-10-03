@@ -332,6 +332,24 @@ function ProfilePage() {
     };
 
 
+    function triggerSubmit() {
+        const form = document.querySelector(
+            ".img-options form"
+        );
+        form.requestSubmit();
+    };
+
+
+    async function uploadImage(event) {
+        event.preventDefault();
+
+        const reqBody = new FormData(event.target);
+        const res = await apiManager.uploadImage(reqBody);
+        console.log(res)
+        event.target.reset();
+    };
+
+
     if (!profileUser) {
         return (
             <main className="profile-page">
@@ -392,7 +410,10 @@ function ProfilePage() {
                             key={2}
                             onClick={toggleImgDel}
                         >Delete image</button>
-                        <form>
+                        <form 
+                            encType="multipart/form-data"
+                            onSubmit={uploadImage}
+                        >
                             <label 
                                 htmlFor="image"
                                 tabIndex={0}
@@ -403,6 +424,7 @@ function ProfilePage() {
                                 type="file" 
                                 name="image" 
                                 id="image"
+                                onChange={triggerSubmit}
                             />
                         </form>
                         </>
