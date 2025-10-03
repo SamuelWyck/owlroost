@@ -275,7 +275,10 @@ function ProfilePage() {
                             onClick={toggleImgDel}
                         >Delete image</button>
                         <form>
-                            <label htmlFor="image">
+                            <label 
+                                htmlFor="image"
+                                tabIndex={0}
+                            >
                                 Upload image
                             </label>
                             <input 
