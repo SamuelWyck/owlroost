@@ -49,7 +49,7 @@ main.posts-page .loading-img-wrapper {
     transition: all .1s ease-in-out;
 }
 
-.filter-choices button:hover, .filter-choices:focus {
+.filter-choices button:hover, .filter-choices button:focus {
     box-shadow: none;
     background-image: none;
     color: var(--background-color);
