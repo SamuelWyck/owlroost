@@ -28,6 +28,12 @@
     align-items: center;
     gap: .5rem;
     width: calc(100% - 68px);
+    text-decoration: none;
+    color: var(--background-color);
+}
+
+.request-user:hover, .request-user:focus {
+    text-decoration: underline;
 }
 
 .request-user p {

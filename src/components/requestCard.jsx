@@ -4,6 +4,7 @@ import closeImg from "../assets/close.svg";
 import yesImg from "../assets/check.svg";
 import deleteImg from "../assets/delete.svg";
 import { useState, useRef, useContext } from "react";
+import { Link } from "react-router-dom";
 import apiManager from "../utils/apiManager.js";
 import { ErrorContext } from "../utils/context.js";
 
@@ -62,7 +63,12 @@ function RequestCard({request, sent, delCb}) {
 
     return (
     <div className="request-card">
-        <div className="request-user">
+        <Link 
+            to={`/users/${(sent) ? request.receiving_user_id :
+                request.sending_user_id}`
+            } 
+            className="request-user"
+        >
             <div className="request-user-img-wrapper">
                 {(profileImg.current) ?
                 <img src={profileImg.current} />
@@ -71,7 +77,7 @@ function RequestCard({request, sent, delCb}) {
                 }
             </div>
             <p>{username.current}</p>
-        </div>
+        </Link>
         <div className="request-options">
             {(showDel) ?
             <>
