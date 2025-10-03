@@ -13,12 +13,24 @@ import {ErrorContext} from "../utils/context.js";
 
 
 function ProfilePage() {
+    const postsShown = 0;
+    const commentsShown = 1;
+    const followedPostsShown = 2;
+
     const {userId} = useParams();
     const headerRef = useOutletContext();
     const errorRef = useContext(ErrorContext);
     const fetching = useRef(false);
-    const arePosts = useRef(true);
-    const [media, setMedia] = useState();
+    const morePosts = useRef(false);
+    const moreComments = useRef(false);
+    const moreFollowedPosts = useRef(false);
+    const pPageNum = useRef(1);
+    const cmtPageNum = useRef(1);
+    const fllwPPageNum = useRef(1);
+    const [posts, setPosts] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [followedPosts, setFollowedPosts] = useState([]);
+    const [mediaShown, setMediaShown] = useState(0);
     const [sentReqs, setSentReqs] = useState([]);
     const [incomingReqs, setIncomimgReqs] = useState([]);
     const [followedUsers, setFollowedUsers] = useState(null);
@@ -30,11 +42,11 @@ function ProfilePage() {
 
 
     useEffect(function() {
+        const pageNum = 0;
         Promise.all([
             apiManager.getUserProfile(userId),
-            apiManager.getUserPosts(userId)
+            apiManager.getUserPosts(userId, pageNum)
         ]).then(function(res) {
-            console.log(res)
             const [profileRes, postsRes] = res;
             if (profileRes.errors || postsRes.errors) {
                 errorRef.current.showError("Server error");
@@ -47,9 +59,19 @@ function ProfilePage() {
             postsRes.user.id : null;
             setClientUserId(clientUserId);
 
-            setMedia(getMediaCards(
-                postsRes.posts, clientUserId
+            setPosts(getMediaCards(
+                postsRes.posts, clientUserId, true
             ));
+            setComments([]);
+            setFollowedPosts([]);
+            setMediaShown(postsShown);
+            morePosts.current = postsRes.morePosts;
+            moreComments.current = true;
+            moreFollowedPosts.current = true;
+            pPageNum.current = 1;
+            cmtPageNum.current = 0;
+            fllwPPageNum.current = 0;
+
             setProfileUser(profileRes.profile.user);
             setClientFollowing(profileRes.followingUser);
             if (!profileRes.profile.user.info) {
@@ -72,9 +94,8 @@ function ProfilePage() {
     }, [userId, headerRef, errorRef]);
 
 
-    function getMediaCards(media, userId) {
-        const Element = (arePosts.current) ? 
-        PostCard : CommentCard;
+    function getMediaCards(media, userId, arePosts) {
+        const Element = (arePosts) ? PostCard : CommentCard;
         const cards = [];
         for (let item of media) {
             cards.push(
@@ -214,6 +235,103 @@ function ProfilePage() {
     };
 
 
+    async function fetchMedia(mediaChoice, replaceCards) {
+        fetching.current = true;
+        let res = null;
+        let setState = setPosts;
+        let arePosts = true;
+        let resMediaKey = "posts";
+        let moreRef = morePosts;
+        let resMoreKey = "morePosts";
+        let pageNumRef = pPageNum;
+        if (mediaChoice === postsShown) {
+            res = await apiManager.getUserPosts(
+                userId, pPageNum.current
+            );
+        } else if (mediaChoice === commentsShown) {
+            setState = setComments;
+            arePosts = false;
+            resMediaKey = "comments";
+            moreRef = moreComments;
+            resMoreKey = "moreComments";
+            pageNumRef = cmtPageNum;
+            res = await apiManager.getUserComments(
+                userId, cmtPageNum.current
+            );
+        } else {
+            setState = setFollowedPosts;
+            moreRef = moreFollowedPosts;
+            pageNumRef = fllwPPageNum;
+            res = await apiManager.getUserFollowedPosts(
+                userId, fllwPPageNum.current
+            );
+        }
+        fetching.current = false;
+        if (res.errors) {
+            errorRef.current.showError("Server error");
+            return;
+        }
+
+        headerRef.current.updateUser(res.user);
+        setState(function(cards) {
+            const newCards = getMediaCards(
+                res[resMediaKey], clientUserId, arePosts
+            );
+
+            if (replaceCards) {
+                return newCards;
+            } else {
+                return [...cards, newCards];
+            }
+        });
+        setMediaShown(mediaChoice);
+        moreRef.current = res[resMoreKey];
+        pageNumRef.current += 1;
+    };
+
+
+    async function toggleMediaShown(mediaChoice) {
+        if (mediaChoice === mediaShown) {
+            return;
+        }
+        if (fetching.current) {
+            return;
+        }
+        if ((mediaChoice === postsShown && (posts.length > 0 
+        || !morePosts.current)) ||
+        (mediaChoice === commentsShown && (comments.length > 0
+        || !moreComments.current)) || 
+        (mediaChoice === followedPostsShown &&
+        (followedPosts.length > 0 || !moreFollowedPosts.current))) {
+            setMediaShown(mediaChoice);
+            return;
+        }
+
+        const replaceCards = true;
+        await fetchMedia(mediaChoice, replaceCards);
+    };
+
+
+    async function handleScroll(event) {
+        if (fetching.current) {
+            return;
+        }
+        if ((mediaShown === postsShown && !morePosts.current)
+            || (mediaShown === commentsShown && !moreComments.current)
+        || (mediaShown === followedPostsShown && !moreFollowedPosts.current)) {
+            return;
+        }
+        const target = event.target;
+        const scrollPos = target.scrollTop + target.clientHeight;
+        if (scrollPos !== target.scrollHeight) {
+            return;
+        }
+        
+        const replaceCards = false;
+        await fetchMedia(mediaShown, replaceCards);
+    };
+
+
     if (!profileUser) {
         return (
             <main className="profile-page">
@@ -224,7 +342,7 @@ function ProfilePage() {
 
 
     return (
-    <main className="profile-page">
+    <main className="profile-page" onScroll={handleScroll}>
         <section className="profile-section">
             <div className="follow-user-wrapper">
                 <p>{profileUser.username}</p>
@@ -340,12 +458,40 @@ function ProfilePage() {
         </section>
         <section className="media-section">
             <div className="media-options">
-                <button>Posts</button>
-                <button>Comments</button>
-                <button>Followed posts</button>
+                <button
+                    onClick={function() {
+                        toggleMediaShown(postsShown);
+                    }}
+                >Posts</button>
+                <button
+                    onClick={function() {
+                        toggleMediaShown(commentsShown);
+                    }}
+                >Comments</button>
+                <button
+                    onClick={function() {
+                        toggleMediaShown(followedPostsShown);
+                    }}
+                >Followed posts</button>
             </div>
             <div className="media">
-                {media}
+                {(mediaShown === postsShown) ?
+                <>
+                {posts}
+                </>
+                :
+                <>
+                {(mediaShown === commentsShown) ?
+                <>
+                {comments}
+                </>
+                :
+                <>
+                {followedPosts}
+                </>
+                }
+                </>
+                }
             </div>
         </section>
     </main>
