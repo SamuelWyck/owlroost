@@ -362,6 +362,20 @@ class ApiManager {
         const response = await this.#makeApiCall(url, options);
         return response;
     };
+
+
+    async uploadImage(reqBody) {
+        const url = `${this.#apiDomain}/users/upload-image`;
+        const options = {
+            mode: "cors",
+            method: "POST",
+            credentials: "include",
+            body: reqBody
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
 };
 
 
