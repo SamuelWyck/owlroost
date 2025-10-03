@@ -222,8 +222,37 @@ class ApiManager {
     };
 
 
-    async getUserPosts(userId) {
-        const url = `${this.#apiDomain}/users/${userId}/posts`;
+    async getUserPosts(userId, pageNum) {
+        const endPoint = `/${userId}/posts?pageNum=${pageNum}`;
+        const url = `${this.#apiDomain}/users${endPoint}`;
+        const options = {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
+    async getUserComments(userId, pageNum) {
+        const endPoint = `/${userId}/comments?pageNum=${pageNum}`;
+        const url = `${this.#apiDomain}/users${endPoint}`;
+        const options = {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        };
+
+        const response = await this.#makeApiCall(url, options);
+        return response;
+    };
+
+
+    async getUserFollowedPosts(userId, pageNum) {
+        const endPoint = `/${userId}/followed-posts?pageNum=${pageNum}`;
+        const url = `${this.#apiDomain}/users${endPoint}`;
         const options = {
             mode: "cors",
             method: "GET",
