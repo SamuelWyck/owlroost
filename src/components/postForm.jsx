@@ -34,13 +34,13 @@ function PostForm(
     async function createPost(event) {
         event.preventDefault();
 
-        const formData = new FormData(event.target);
-        let reqBody = {};
-        for (let entry of formData.entries()) {
-            const [key, value] = entry;
-            reqBody[key] = value;
-        }
-        reqBody = JSON.stringify(reqBody);
+        const reqBody = new FormData(event.target);
+        // let reqBody = {};
+        // for (let entry of formData.entries()) {
+        //     const [key, value] = entry;
+        //     reqBody[key] = value;
+        // }
+        // reqBody = JSON.stringify(reqBody);
 
         const res = await apiManager.createPost(reqBody);
         if (res.errors) {
@@ -102,6 +102,7 @@ function PostForm(
         <form 
             className="post-form"
             onSubmit={(edit) ? editPost : createPost}
+            encType="multipart/form-data"
         >   
             {!errors ||
             <ul className="errors">
@@ -118,6 +119,14 @@ function PostForm(
                     maxLength={200}
                     required
                 />
+            </div>
+            <div className="image-div">
+                {edit ||
+                <>
+                <label htmlFor="image">Upload image</label>
+                <input type="file" name="image" id="image"/>
+                </>
+                }
             </div>
             <div>
                 <textarea 
