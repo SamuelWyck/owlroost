@@ -94,6 +94,6 @@
 #delete-img:checked + label {
     box-shadow: none;
     background-image: none;
-    background-color: rgb(228, 83, 83);
+    background-color: var(--red-color);
     color: var(--text-muted);
 }
