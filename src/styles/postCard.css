@@ -42,11 +42,17 @@
 
 .post-card-user-img-wrapper {
     width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
     display: flex;
 }
 
 .post-card-user-img-wrapper img {
     width: 100%;
+}
+
+.post-card-user-img-wrapper img.default {
     filter: var(--filter);
 }
 

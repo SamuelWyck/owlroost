@@ -16,7 +16,14 @@
 
 .request-user-img-wrapper {
     width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
     display: flex;
+}
+
+.request-user-img-wrapper img {
+    width: 100%;
 }
 
 .request-user-img-wrapper img.default {

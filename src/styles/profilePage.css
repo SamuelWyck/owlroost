@@ -91,9 +91,11 @@ main.profile-page {
 
 .profile-img-wrapper {
     width: 250px;
+    height: 250px;
     display: flex;
     background-color: var(--foreground-color);
     border-radius: 50%;
+    overflow: hidden;
     box-shadow: var(--small-shadow);
 }
 

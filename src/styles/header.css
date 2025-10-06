@@ -76,6 +76,9 @@ header nav {
 
 .user-profile-img {
     width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
 .user-menu-btn:hover, .user-menu-btn:focus {
