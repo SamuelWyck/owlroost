@@ -91,9 +91,6 @@ class ApiManager {
             mode: "cors",
             method: "POST",
             credentials: "include",
-            headers: {
-                "content-type": "application/json"
-            },
             body: reqBody
         };
 
