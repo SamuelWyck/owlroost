@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function PostForm(
-    {titleValue="", contentValue="", postId, edit}) {
+    {titleValue="", contentValue="", postId, imageUrl, edit}) {
     const navigate = useNavigate();
     const [showDel, setShowDel] = useState(false);
     const [titleVal, setTitleVal] = useState(titleValue);
@@ -35,13 +35,6 @@ function PostForm(
         event.preventDefault();
 
         const reqBody = new FormData(event.target);
-        // let reqBody = {};
-        // for (let entry of formData.entries()) {
-        //     const [key, value] = entry;
-        //     reqBody[key] = value;
-        // }
-        // reqBody = JSON.stringify(reqBody);
-
         const res = await apiManager.createPost(reqBody);
         if (res.errors) {
             setErrors(getErrorCards(res.errors));
@@ -69,14 +62,7 @@ function PostForm(
     async function editPost(event) {
         event.preventDefault();
 
-        const formdata = new FormData(event.target);
-        let reqBody = {};
-        for (let entry of formdata.entries()) {
-            const [key, value] = entry;
-            reqBody[key] = value;
-        }
-        reqBody = JSON.stringify(reqBody);
-
+        const reqBody = new FormData(event.target);
         const res = await apiManager.editPost(reqBody, postId);
         if (res.errors) {
             setErrors(getErrorCards(res.errors));
@@ -121,12 +107,21 @@ function PostForm(
                 />
             </div>
             <div className="image-div">
-                {edit ||
+                {(edit && imageUrl) ?
                 <>
+                <input 
+                    type="checkbox" 
+                    name="deleteImg"
+                    id="delete-img"
+                    hidden
+                />
+                <label htmlFor="delete-img">Delete image</label>
+                </>
+                :
+                null
+                }
                 <label htmlFor="image">Upload image</label>
                 <input type="file" name="image" id="image"/>
-                </>
-                }
             </div>
             <div>
                 <textarea 
