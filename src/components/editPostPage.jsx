@@ -44,6 +44,7 @@ function EditPostPage() {
             edit={true} 
             titleValue={post.title} 
             contentValue={post.content}
+            imageUrl={post.image_url}
             postId={postId}
         />
     </main>
