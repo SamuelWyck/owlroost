@@ -183,6 +183,11 @@ function PostPage() {
                 <p className="post-date">{post.date}</p>
             </div>
             <p className="post-title">{post.title}</p>
+            {!post.image_url ||
+            <div className="post-image-wrapper">
+                <img src={post.image_url} alt="post-image" />
+            </div>
+            }
             <p className="post-content">{post.content}</p>
             <div className="post-likes-section">
                 {!user ||

@@ -79,6 +79,16 @@ main.post-page {
     letter-spacing: .04rem;
 }
 
+.post-image-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.post-image-wrapper img {
+    max-width: 100%;
+}
+
 .post-content {
     font-size: clamp(.9rem, .5rem + 2vw, 1.1rem);
     word-break: break-word;
