@@ -47,7 +47,7 @@
     gap: 4rem;
 }
 
-.post-form button {
+.post-form button, .post-form label {
     cursor: pointer;
     background-color: var(--foreground-color);
     outline: none;
@@ -64,7 +64,8 @@
     transition: all .1s ease-in-out;
 }
 
-.post-form button:hover, .post-form button:focus {
+.post-form button:hover, .post-form button:focus,
+.post-form label:hover, .post-form label:focus {
     box-shadow: none;
     color: var(--background-color);
     background-image: none;
@@ -76,4 +77,15 @@
     flex-direction: column;
     gap: .4rem;
     color: var(--text-muted);
+}
+
+.post-form input[type="file"] {
+    display: none;
+}
+
+.image-div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
 }
