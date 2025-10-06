@@ -342,11 +342,44 @@ function ProfilePage() {
 
     async function uploadImage(event) {
         event.preventDefault();
+        if (fetching.current) {
+            return;
+        }
 
         const reqBody = new FormData(event.target);
+        fetching.current = true;
         const res = await apiManager.uploadImage(reqBody);
-        console.log(res)
-        event.target.reset();
+        fetching.current = false;
+        if (res.errors) {
+            errorRef.current.showError("Server error");
+            return;
+        }
+
+        headerRef.current.updateUser(res.user);
+        setProfileUser(function(user) {
+            return {...user, profile_img_url: res.img_url};
+        });
+    };
+
+
+    async function deleteImage() {
+        if (fetching.current) {
+            return;
+        }
+
+        fetching.current = true;
+        const res = await apiManager.deleteImage();
+        fetching.current = false;
+        if (res.errors) {
+            errorRef.current.showError("Server error");
+            return;
+        }
+
+        headerRef.current.updateUser(res.user);
+        setShowImgDel(false);
+        setProfileUser(function(oldUser) {
+            return {...oldUser, profile_img_url: null};
+        });
     };
 
 
@@ -402,6 +435,7 @@ function ProfilePage() {
                         >Cancel</button>
                         <button
                             key={1}
+                            onClick={deleteImage}
                         >Delete</button>
                         </>
                         :
