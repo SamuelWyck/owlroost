@@ -17,8 +17,8 @@ function RequestCard({request, sent, delCb}) {
         request.sending_user_username
     );
     const profileImg = useRef(
-        (sent) ? request.receiving_user_profile_img_url :
-        request.sending_user_profile_img_url
+        (sent) ? request.receiving_user_img :
+        request.sending_user_img
     );
     const [showDel, setShowDel] = useState(false);
 
