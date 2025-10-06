@@ -88,4 +88,12 @@
     width: 100%;
     justify-content: center;
     gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#delete-img:checked + label {
+    box-shadow: none;
+    background-image: none;
+    background-color: rgb(228, 83, 83);
+    color: var(--text-muted);
 }
