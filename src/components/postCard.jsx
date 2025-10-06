@@ -49,6 +49,11 @@ function PostCard({post, userId}) {
         <p className="post-card-title">
             {post.title}
         </p>
+        {!post.image_url ||
+        <div className="post-card-img-wrapper">
+            <img src={post.image_url} alt="post-image" />
+        </div>
+        }
         <div className="post-card-meta-info">
         <div className="post-card-likes">
             <p>{likesref.current}</p>

@@ -56,6 +56,16 @@
     filter: var(--filter);
 }
 
+.post-card-img-wrapper {
+    width: 90px;
+    height: 90px;
+    display: flex;
+}
+
+.post-card-img-wrapper img {
+    width: 100%;
+}
+
 .post-card-likes {
     display: flex;
     align-items: center;
