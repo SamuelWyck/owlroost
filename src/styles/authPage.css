@@ -110,7 +110,7 @@ main.auth-page {
 
 .auth-img-wrapper img {
     width: 100%;
-    filter: var(--background-img-filter)
+    filter: var(--filter)
 }
 
 .auth-modal .errors {
@@ -128,4 +128,11 @@ main.auth-page {
     text-decoration: none;
     color: var(--text-muted);
     margin-bottom: 1rem;
+    --filter: var(--background-img-filter);
+    outline: none;
+}
+
+.home-link:hover, .home-link:focus {
+    text-decoration: underline;
+    --filter: var(--highlight-img-filter);
 }
